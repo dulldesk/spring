@@ -1,0 +1,9 @@
+$mobile: 576px;
+$tablet: 768px;
+$laptop: 1000px;
+
+@mixin screen($wd) {
+	@media screen and (max-width: $wd) {
+		@content;
+	}
+}

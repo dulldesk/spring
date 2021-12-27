@@ -1,0 +1,84 @@
+@import "../colours";
+
+%bookmark-shadow {
+	box-shadow: 0 1px 4px $shadow;
+}
+%bookmark-text {
+	color: rgba($text,0.5);
+}
+
+@each $clr, $val in $pastel {
+	.bookmark, mark {
+		&.#{$clr} {
+			background-color: rgba($val, 0.2);
+		}
+	}
+}
+
+mark {
+	background-color: rgba(map-get($pastel,"yellow"), 0.35);
+	padding: 2.5px 4px;
+
+	&.p-0 {
+		padding: 0;
+	}
+}
+
+.box .bookmark {
+	position: absolute;
+	top: 0;
+	left: calc(100% + 2px);
+	transform: rotate(90deg);
+	transform-origin: 0 100%;
+
+	// min-width: 100px;
+	padding: 2px 25px {
+		top: 5px;
+	};
+	white-space: nowrap;
+
+	font-size: 0.9rem;
+	// background-color: #ffaaaa85; // red
+
+	@extend %bookmark-shadow;
+	@extend %bookmark-text;
+}
+
+#chapters {
+	position: fixed;
+	top: 60px;
+	right: 0;
+
+	display: flex;
+	flex-flow: column nowrap;
+	gap: 7px;
+
+	> * {
+		max-width: 110px;
+		text-align: right;
+
+		padding: 3px 5px {
+			// left: 20px;
+		};
+		@extend %bookmark-text;
+	}
+	> span:first-child {
+		padding-top: 0;
+		padding-bottom: 0;
+		font-size: 0.8rem;
+	}
+	
+	a.bookmark {
+		font-size: 0.9rem;
+		text-decoration: none;
+
+		// background-color: #dcabfd7d; // purple
+
+		@extend %bookmark-shadow;
+	}
+
+	// could re-style
+	@include screen($tablet) {
+		display: none;
+	}
+}

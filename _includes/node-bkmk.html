@@ -1,0 +1,5 @@
+<div class="box">
+	{{ include.content | markdownify }}
+	{% capture default_clr -%} {{ site.data.highlight|sample }} {%- endcapture -%}
+	<span class="bookmark {{ include.colour|default:default_clr }}" id="{{ include.slug }}">{{ include.bookmark }}</span>
+</div>

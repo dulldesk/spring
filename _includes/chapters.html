@@ -1,0 +1,33 @@
+<template id="bkmk">
+	<a href="#" class="bookmark"></a>
+</template>
+
+<div id="chapters">
+	<span title="Jump to a section">Sections:</span>
+</div>
+
+<script>
+	window.addEventListener("load",()=>{
+		let bkmks = [];
+
+		document.querySelectorAll(".bookmark").forEach(i => {
+			bkmks.push({
+				name: i.textContent,
+				slug: i.id,
+				colour: i.className.replace("bookmark","").trim()
+			});
+		});
+
+		const list = document.getElementById("chapters");
+		const tmpl = document.getElementById("bkmk").content.children[0];
+
+		for (let i of bkmks) {
+			let node = tmpl.cloneNode(true);
+			node.href = "#" + i.slug;
+			node.textContent = i.name;
+			if (i.colour) node.classList.add(i.colour);
+
+			list.appendChild(node);
+		}
+	});
+</script>

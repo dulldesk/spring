@@ -1,5 +1,6 @@
 // base components
 @import "colours";
+@import "mixins";
 
 * {
 	box-sizing: border-box;
@@ -32,6 +33,12 @@ main {
 			background: black;
 			height: 2px;
 		}
+	}
+	@include screen($tablet) {
+		padding: 4rem;
+	}
+	@include screen($mobile) {
+		padding: 2.6rem;
 	}
 }
 
