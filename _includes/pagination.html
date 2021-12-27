@@ -1,0 +1,12 @@
+<footer class="paginate">
+	{%- if page.previous_url and page.previous_page -%}
+		<span class="previous">
+			<a href="{{ page.previous_url | relative_url }}">{{ page.previous_page }} ></a>
+		</span>
+	{%- endif -%}
+	{%- if page.next_url and page.next_page -%}
+		<span class="next">
+			<a href="{{ page.next_url | relative_url }}">{{ page.next_page }} ></a>
+		</span>
+	{%- endif -%}
+</footer>

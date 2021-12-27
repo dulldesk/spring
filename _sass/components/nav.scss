@@ -1,0 +1,33 @@
+@import "../colours";
+
+nav {
+	position: absolute;
+	left: 1rem;
+	top: 1rem;
+
+	color: rgba($text, 0.3);
+	text-transform: uppercase;
+
+	span:first-child {
+		font-size: 1.25rem;
+		font-weight: bold;
+		cursor: pointer;
+		user-select: none;
+	}
+	ul {
+		padding-left: 0;
+	}
+	li {
+		list-style-type: none;
+		font-size: 1rem;
+	}
+	a {
+		text-decoration: none;
+		width: 100%;
+		display: inline-block;
+
+		&:hover {
+
+		}
+	}
+}
