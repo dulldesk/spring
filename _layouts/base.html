@@ -2,8 +2,18 @@
 <html>
 <head>
 	{%- include head.html -%}
+	{%- if page.mathjax == false -%}
+		<link rel="preload" href="https://polyfill.io/v3/polyfill.min.js?features=es6" as="script">
+		<link rel="preload" href="https://cdn.jsdelivr.net/npm/mathjax@3.2/es5/tex-mml-chtml.js" as="script">
+	{%- endif -%}
 </head>
 <body>
-	{{ content }}
+	<main>
+		{{ content }}
+	</main>
+	{%- if page.mathjax -%}
+		<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+		<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.2/es5/tex-mml-chtml.js"></script>
+	{%- endif -%}
 </body>
 </html>

@@ -1,0 +1,48 @@
+// base components
+@import "colours";
+
+* {
+	box-sizing: border-box;
+}
+html {
+	scroll-behavior: smooth;
+}
+body {
+	font-family: 'Quattrocento', -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+	margin: 0;
+}
+main {
+	min-height: 100vh;
+	max-width: 1100px;
+	margin: auto;
+	padding: 4rem max(5%, 9.5rem);
+	text-align: center;
+
+	h1,h2 {
+		&:first-child {
+			margin-top: 0;
+		}
+	}
+	.title {
+		h1 {
+			margin: 0;
+		}
+		+ hr {
+			border: none;
+			background: black;
+			height: 2px;
+		}
+	}
+}
+
+h1,h2,h3,h4,h5,h6 {
+	font-family: 'Poor Richard', 'Quattrocento', sans-serif;
+	font-weight: 300;
+}
+h1 {
+	font-size: 3rem;
+}
+h2 {
+	font-weight: bold;
+	font-size: 2rem;
+}

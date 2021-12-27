@@ -11,6 +11,7 @@ defaults:
       path: ""
     values:
       layout: default
+      mathjax: true
 
 exclude: ["*-cache/", "Gemfile*", "README.md"]
 
