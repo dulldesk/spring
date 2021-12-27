@@ -3,11 +3,45 @@
 	justify-content: space-between;
 	align-items: center;
 	gap: 2rem;
-}
 
-.inputs {
-	label {
-		padding-right: 0.25rem;
-		text-align: center;
+	div:nth-child(1) {
+		position: relative;
+
+		#pt-0 {
+			font-family: serif;
+			position: absolute;
+			bottom: 0;
+			left: 0;
+		}
+	}
+
+	table {
+		align-self: flex-end;
+		margin-bottom: 1rem;
+
+		td:last-child {
+			text-align: left;
+		}
+		.inputs {
+			label {
+				padding-right: 0.25rem;
+				text-align: center;
+			}
+		}
+		.br {
+			height: 1rem;
+		}
+		.outputs {
+			td[data-units] {
+				&::before {
+					content: " =";
+					margin-right: 7px;
+				}
+				&::after {
+					content: attr(data-units);
+					margin-left: 5px;
+				}
+			}
+		}
 	}
 }

@@ -23,6 +23,9 @@ const getX0 = () => getInput("x0");
 drawWall();
 drawAxis();
 
+setOutputs(getK(), getMass());
+document.getElementById("m").addEventListener("input", onInputChange);
+document.getElementById("k").addEventListener("input", onInputChange);
 let previousTimeStamp = -1;
 function animate(t) {
 	if (t != previousTimeStamp) {
@@ -73,6 +76,19 @@ function drawWeight(x,y,s) {
 	ctx.fillRect(x, y - 0.5 * s, s, s);
 }
 
+function setOutputs(k, m) {
+	let af = Math.sqrt(k / m);
+	let freq = af / (2 * Math.PI);
+	let period = 1 / freq;
+	document.getElementById("w").textContent = af.toFixed(3);
+	document.getElementById("T").textContent = period.toFixed(3);
+	document.getElementById("f").textContent = freq.toFixed(3);
+}
+
 function getInput(id) {
 	return parseInt(document.getElementById(id).value);
+}
+
+function onInputChange() {
+	setOutputs(getK(), getMass());
 }
