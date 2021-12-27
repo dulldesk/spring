@@ -1,11 +1,20 @@
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
 
-const CV_W = 400;
-const CV_H = 300;
-const WALL_W = 7;
-const WALL_H = 160;
-const DIST_FROM_WALL = 105+WALL_W;
+const requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
+                            window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+const cancelAnimationFrame = window.cancelAnimationFrame || window.mozCancelAnimationFrame;
+
+const CV = {W:400, H:300};
+const HALF_CV = CV.H/2;
+const WALL = {W:7, H:160};
+const DIST_FROM_WALL = 105+WALL.W;
+const SPRING = {
+	X: WALL.W,
+	Y: HALF_CV,
+	DX: 10,
+	DY: 10
+};
 
 const getMass = () => getInput("m");
 const getK = () => getInput("k");
@@ -17,27 +26,30 @@ drawAxis();
 let previousTimeStamp = -1;
 function animate(t) {
 	if (t != previousTimeStamp) {
-		ctx.clearRect(WALL_W,0,CV_W-WALL_W,(CV_H+WALL_H)*0.5);
+		ctx.clearRect(WALL.W,0,CV.W-WALL.W,(CV.H+WALL.H)*0.5);
 		previousTimeStamp = t;
 		let m = getMass();
-		x = getX0() * Math.cos(t/40 * Math.sqrt(getK() / m))+DIST_FROM_WALL;
-		drawWeight(x, CV_H/2, m);
+		x = calculateX(t);
+		drawWeight(x, CV.H/2, m);
 	}
-	window.requestAnimationFrame(animate);
+	req = requestAnimationFrame(animate);
+}
+function calculateX(t, init_dist=DIST_FROM_WALL) {
+	return getX0() * Math.cos(t/40 * Math.sqrt(getK() / getMass()))+init_dist;
 }
 
-window.requestAnimationFrame(animate);
+requestAnimationFrame(animate);
 
 function drawAxis() {
 	ctx.fillStyle = 'grey';
 	ctx.font = '20px serif';
 
 	// aligned with left, not centre, of mass...
-	ctx.fillText('0', DIST_FROM_WALL-5, CV_H-25);
+	ctx.fillText('0', DIST_FROM_WALL-5, CV.H-25);
 }
-function drawWall(w=WALL_W, h=WALL_H) {
+function drawWall(w=WALL.W, h=WALL.H) {
 	ctx.fillStyle = '#7d5938';
-	ctx.fillRect(0, 0.5 * (CV_H - h), w, h);
+	ctx.fillRect(0, 0.5 * (CV.H - h), w, h);
 }
 function drawWeight(x,y,s) {
 	ctx.fillStyle = 'grey';
