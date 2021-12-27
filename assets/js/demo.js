@@ -19,13 +19,20 @@ const SPRING = {
 const getMass = () => getInput("m");
 const getK = () => getInput("k");
 const getX0 = () => getInput("x0");
+const getB = () => getInput("b");
 
 drawWall();
 drawAxis();
 
+$("#damper-input").hide();
 setOutputs(getK(), getMass());
 document.getElementById("m").addEventListener("input", onInputChange);
 document.getElementById("k").addEventListener("input", onInputChange);
+document.getElementById("damper").addEventListener("change", toggleDamper);
+
+// var req;
+var calculateX = calculateXNoDamper; 
+
 let previousTimeStamp = -1;
 function animate(t) {
 	if (t != previousTimeStamp) {
@@ -40,8 +47,11 @@ function animate(t) {
 	}
 	req = requestAnimationFrame(animate);
 }
-function calculateX(t, init_dist=DIST_FROM_WALL) {
+function calculateXNoDamper(t, init_dist=DIST_FROM_WALL) {
 	return getX0() * Math.cos(t/40 * Math.sqrt(getK() / getMass()))+init_dist;
+}
+function calculateXWithDamper(t, init_dist=DIST_FROM_WALL) {
+	return 200;
 }
 function drawSpring(mass_x, k) {
 	ctx.fillStyle = 'black';
@@ -91,4 +101,15 @@ function getInput(id) {
 
 function onInputChange() {
 	setOutputs(getK(), getMass());
+}
+function toggleDamper() {
+	// cancelAnimationFrame(req);
+
+	if ($("#damper-input").is(":visible")) {
+		$("#damper-input").hide();
+		calculateX = calculateXNoDamper;
+	} else {
+		$("#damper-input").show();
+		calculateX = calculateXWithDamper;
+	}
 }

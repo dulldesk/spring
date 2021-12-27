@@ -17,6 +17,10 @@
 				<td><label for="k">k</label></td>
 				<td><input type="range" id="k" name="k" min="0" max="10" step="1"></td>
 			</tr>
+			<tr id="damper-input">
+				<td><label for="b">b</label></td>
+				<td><input type="range" id="b" name="b" min="0" max="10" step="1"></td>
+			</tr>
 		</tbody>
 		<tr class="br"></tr>
 		<tbody class="outputs">
@@ -33,6 +37,14 @@
 				<td id="f" data-units="s⁻¹"></td>
 			</tr>
 		</tbody>
+		<tr class="br"></tr>
+		<tbody>
+			<tr>
+				<td><input type="checkbox" id="damper"></td>
+				<td><label for="damper">Use a damper</label></td>
+			</tr>
+		</tbody>
 	</table>
 </div>
-<script src="/assets/js/demo.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+<script src="/assets/js/demo.js" defer></script>
