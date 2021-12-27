@@ -21,3 +21,7 @@ $$
 {% endcapture %}
 
 {% include node.html content=block %}
+
+<div class="box">
+	{% include demo.html %}
+</div>

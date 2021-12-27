@@ -1,0 +1,13 @@
+.demo {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 2rem;
+}
+
+.inputs {
+	label {
+		padding-right: 0.25rem;
+		text-align: center;
+	}
+}
