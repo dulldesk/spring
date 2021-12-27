@@ -15,18 +15,18 @@ drawWall();
 drawAxis();
 
 let previousTimeStamp = -1;
-function step(t) {
+function animate(t) {
 	if (t != previousTimeStamp) {
 		ctx.clearRect(WALL_W,0,CV_W-WALL_W,(CV_H+WALL_H)*0.5);
 		previousTimeStamp = t;
 		let m = getMass();
-		x = getX0() * Math.cos(t/40 * Math.sqrt(getK() / m));
-		drawWeight(x+DIST_FROM_WALL, CV_H/2, m);
+		x = getX0() * Math.cos(t/40 * Math.sqrt(getK() / m))+DIST_FROM_WALL;
+		drawWeight(x, CV_H/2, m);
 	}
-	window.requestAnimationFrame(step);
+	window.requestAnimationFrame(animate);
 }
 
-window.requestAnimationFrame(step);
+window.requestAnimationFrame(animate);
 
 function drawAxis() {
 	ctx.fillStyle = 'grey';
@@ -36,7 +36,7 @@ function drawAxis() {
 	ctx.fillText('0', DIST_FROM_WALL-5, CV_H-25);
 }
 function drawWall(w=WALL_W, h=WALL_H) {
-	ctx.fillStyle = 'grey';
+	ctx.fillStyle = '#7d5938';
 	ctx.fillRect(0, 0.5 * (CV_H - h), w, h);
 }
 function drawWeight(x,y,s) {
