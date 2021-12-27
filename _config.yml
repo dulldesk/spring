@@ -13,7 +13,7 @@ defaults:
       layout: default
       mathjax: true
 
-exclude: ["*-cache/", "Gemfile*", "README.md"]
+exclude: ["*-cache/", "Gemfile*", "**/README.md", "README.md"]
 
 sass:
   style: compressed
