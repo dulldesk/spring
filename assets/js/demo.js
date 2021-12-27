@@ -30,12 +30,29 @@ function animate(t) {
 		previousTimeStamp = t;
 		let m = getMass();
 		x = calculateX(t);
+		let k = getK();
+		drawSpring(x, k);
+		drawWall();
 		drawWeight(x, CV.H/2, m);
 	}
 	req = requestAnimationFrame(animate);
 }
 function calculateX(t, init_dist=DIST_FROM_WALL) {
 	return getX0() * Math.cos(t/40 * Math.sqrt(getK() / getMass()))+init_dist;
+}
+function drawSpring(mass_x, k) {
+	ctx.fillStyle = 'black';
+	// ctx.lineWidth = k/3;
+    ctx.beginPath();
+    ctx.moveTo(SPRING.X, SPRING.Y);
+    let x = SPRING.X - 5;
+    let neg1 = 1;
+    for (; x <= mass_x; neg1*=-1) {
+    	x += SPRING.DX;
+    	ctx.lineTo(x, SPRING.Y + SPRING.DY * neg1);
+    }
+	ctx.lineTo(x + SPRING.DX/2, SPRING.Y + SPRING.DY/2 * neg1);
+    ctx.stroke();
 }
 
 requestAnimationFrame(animate);
