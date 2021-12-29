@@ -13,7 +13,8 @@ const SPRING = {
 	X: WALL.W,
 	Y: HALF_CV,
 	DX: 10,
-	DY: 10
+	DY: 10,
+	TX: 1
 };
 
 const getMass = () => getInput("m");
@@ -27,6 +28,8 @@ drawAxis();
 
 $("#damper-input").hide();
 setOutputs(getK(), getMass());
+document.getElementById("x0").addEventListener("input", onInputChange.bind(null, false));
+document.getElementById("b").addEventListener("input", onInputChange.bind(null, false));
 document.getElementById("m").addEventListener("input", onInputChange);
 document.getElementById("k").addEventListener("input", onInputChange);
 document.getElementById("damper").addEventListener("change", toggleDamper);
@@ -35,16 +38,19 @@ document.getElementById("damper").addEventListener("change", toggleDamper);
 var calculateX = calculateXNoDamper; 
 
 let previousTimeStamp = -1;
-function animate(t) {
+let ts = 0;
+function animate(_) {
+	let t = ts;
 	if (t != previousTimeStamp) {
 		ctx.clearRect(WALL.W,0,CV.W-WALL.W,(CV.H+WALL.H)*0.5);
 		previousTimeStamp = t;
 		let m = getMass();
-		x = calculateX(t);
+		let x = Math.round(calculateX(t));
 		let k = getK();
 		drawSpring(x, k);
 		drawWall();
 		drawWeight(x, CV.H/2, m);
+		ts += SPRING.TX;
 	}
 	req = requestAnimationFrame(animate);
 }
@@ -80,9 +86,9 @@ function calculateXWithDamper(t, init_dist=DIST_FROM_WALL) {
 	else{
 		// underdamped
 		console.log("underdamped");
-		let λ = (-1 * b)/(2 * m)
-		let μ = (Math.sqrt(-1 * d))/(2 * m);
-		ret = x0 * Math.pow(e, λ * t) * Math.cos(μ * t); 
+		let lmd = (-1 * b)/(2 * m)
+		let mu = (Math.sqrt(-1 * d))/(2 * m);
+		ret = x0 * Math.pow(e, lmd * t) * Math.cos(mu * t); 
 	}
 	console.log(ret);
 	return ret + init_dist;
@@ -133,15 +139,11 @@ function getInput(id) {
 	return parseInt(document.getElementById(id).value);
 }
 
-function onInputChange() {
-	cancelAnimationFrame(req);
-	setOutputs(getK(), getMass());
-	req = requestAnimationFrame(animate);
-	previousTimeStamp =-1;
+function onInputChange(updateOutput=true) {
+	if (updateOutput) setOutputs(getK(), getMass());
+	resetTime();
 }
 function toggleDamper() {
-    cancelAnimationFrame(req);
-
     if ($("#damper-input").is(":visible")) {
         $("#damper-input").hide();
 		$(".outputs").show()
@@ -151,6 +153,11 @@ function toggleDamper() {
 		$(".outputs").hide()
         calculateX = calculateXWithDamper;
     }
-	req = requestAnimationFrame(animate);
-	previousTimeStamp =-1;
+    resetTime();
+}
+function resetTime() {
+	// cancelAnimationFrame(req);
+	ts = 0;
+	previousTimeStamp = -1;
+	// req = requestAnimationFrame(animate);
 }
