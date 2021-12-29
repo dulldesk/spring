@@ -1,8 +1,7 @@
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
 
-const requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
-                            window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+const requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
 const cancelAnimationFrame = window.cancelAnimationFrame || window.mozCancelAnimationFrame;
 
 const CV = {W:400, H:300};
@@ -46,6 +45,7 @@ function animate(_) {
 		previousTimeStamp = t;
 		let m = getMass();
 		let x = Math.round(calculateX(t));
+		console.log(x, t);
 		let k = getK();
 		drawSpring(x, k);
 		drawWall();
@@ -56,7 +56,7 @@ function animate(_) {
 }
 function calculateXNoDamper(t, init_dist=DIST_FROM_WALL) {
 	let ret = getX0() * Math.cos(t/40 * Math.sqrt(getK() / getMass()));
-	console.log(ret);
+	// console.log(ret);
 	return ret + init_dist;
 }
 function calculateXWithDamper(t, init_dist=DIST_FROM_WALL) {
@@ -90,7 +90,7 @@ function calculateXWithDamper(t, init_dist=DIST_FROM_WALL) {
 		let mu = (Math.sqrt(-1 * d))/(2 * m);
 		ret = x0 * Math.pow(e, lmd * t) * Math.cos(mu * t); 
 	}
-	console.log(ret);
+	// console.log(ret);
 	return ret + init_dist;
 }
 function drawSpring(mass_x, k) {
@@ -108,7 +108,7 @@ function drawSpring(mass_x, k) {
     ctx.stroke();
 }
 
-requestAnimationFrame(animate);
+req = requestAnimationFrame(animate);
 
 function drawAxis() {
 	ctx.fillStyle = 'grey';
