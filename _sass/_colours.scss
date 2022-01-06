@@ -1,4 +1,6 @@
 $black: #0d0d22;
+// $brown-dark: #5a4a4a;
+$blue-dark: #081239;
 $white: #fff;
 
 $pastel: (
@@ -14,5 +16,7 @@ $pastel: (
 );
 
 $text: $black;
+$headings: $blue-dark;
+$title: $blue-dark;
 $bkgd: blanchedalmond;
-$shadow: rgba($black,0.2);
+$shadow: rgba($black,0.15);
