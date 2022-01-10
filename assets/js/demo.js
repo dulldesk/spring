@@ -52,7 +52,9 @@ function animate(_) {
 	req = requestAnimationFrame(animate);
 }
 function calculateXNoDamper(t, k=getK(), m=getMass(), x0=getX0(), init_dist=DIST_FROM_WALL) {
- 	let ret = getX0() * Math.cos(t/40 * Math.sqrt(getK() / getMass()));
+	let d = - 4 * m * k;
+	let mu = (Math.sqrt(-1 * d))/(2 * m);
+	let ret = x0 * Math.cos(mu * t);
 	// console.log(ret);
 	return ret + init_dist;
 }
@@ -85,7 +87,7 @@ function calculateXWithDamper(t, k=getK(), m=getMass(), x0=getX0(), init_dist=DI
 		console.log("underdamped");
 		let lmd = (-1 * b)/(2 * m)
 		let mu = (Math.sqrt(-1 * d))/(2 * m);
-		ret = x0 * Math.pow(e, lmd * t) * Math.cos(mu * t); 
+		ret = x0 * Math.pow(e, lmd * t) * Math.cos(mu * t);
 	}
 	// console.log(ret);
 	return ret + init_dist;
