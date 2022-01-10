@@ -25,7 +25,6 @@ const e = Math.E;
 drawWall();
 drawAxis();
 
-$("#damper-input").hide();
 updateOutput(getK(), getMass());
 document.getElementById("x0").addEventListener("input", onInputChange.bind(null, false));
 document.getElementById("b").addEventListener("input", onInputChange.bind(null, false));
@@ -33,11 +32,14 @@ document.getElementById("m").addEventListener("input", onInputChange);
 document.getElementById("k").addEventListener("input", onInputChange);
 document.getElementById("damper").addEventListener("change", toggleDamper);
 
-// var req;
-var calculateX = calculateXNoDamper; 
 
+var req;
 let previousTimeStamp = -1;
 let ts = 0;
+
+var calculateX;
+toggleDamper();
+
 function animate(_) {
 	let t = ts;
 	if (t != previousTimeStamp) {
@@ -147,7 +149,7 @@ function onInputChange(updateOut=true) {
 	resetTime();
 }
 function toggleDamper() {
-    if ($("#damper-input").is(":visible")) {
+    if (!$("#damper").is(":checked")) {
         $("#damper-input").hide();
 		$(".outputs").show()
         calculateX = calculateXNoDamper;
