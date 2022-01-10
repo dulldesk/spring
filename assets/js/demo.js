@@ -50,7 +50,7 @@ function animate(_) {
 	req = requestAnimationFrame(animate);
 }
 function calculateXNoDamper(t, k=getK(), m=getMass(), x0=getX0(), init_dist=DIST_FROM_WALL) {
-	let ret = x0 * Math.cos(t/40 * Math.sqrt(k / m));
+ 	let ret = getX0() * Math.cos(t/40 * Math.sqrt(getK() / getMass()));
 	// console.log(ret);
 	return ret + init_dist;
 }
