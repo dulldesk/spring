@@ -13,7 +13,8 @@ const SPRING = {
 	Y: HALF_CV,
 	DX: 10,
 	DY: 10,
-	TX: 1
+	TX: 1,
+	MAX_X: undefined
 };
 
 const getMass = () => getInput("m");
@@ -28,10 +29,10 @@ drawAxis();
 updateOutput(getK(), getMass());
 document.getElementById("x0").addEventListener("input", onInputChange.bind(null, false));
 document.getElementById("b").addEventListener("input", onInputChange.bind(null, false));
-document.getElementById("m").addEventListener("input", onInputChange);
+document.getElementById("m").addEventListener("input", handleMassChange);
 document.getElementById("k").addEventListener("input", onInputChange);
 document.getElementById("damper").addEventListener("change", toggleDamper);
-
+canvas.addEventListener("mousedown", handleCanvasDown);
 
 var req;
 let previousTimeStamp = -1;
@@ -39,6 +40,7 @@ let ts = 0;
 
 var calculateX;
 toggleDamper();
+handleMassChange();
 
 function animate(_) {
 	let t = ts;
@@ -88,12 +90,14 @@ function calculateXWithDamper(t, k=getK(), m=getMass(), x0=getX0(), init_dist=DI
 	// console.log(ret);
 	return ret + init_dist;
 }
-function drawAll(t) {
+function drawAll(t,x) {
 	ctx.clearRect(WALL.W,0,CV.W-WALL.W,(CV.H+WALL.H)*0.5);
 	let m = getMass();
 	let k = getK();
-	let x = Math.round(calculateX(t, k, m));
-	console.log(x, t);
+	if (x === undefined) {
+		x = Math.round(calculateX(t, k, m));
+	}
+	// console.log(x, t);
 	drawSpring(x, k);
 	drawWall();
 	drawWeight(x, CV.H/2, m);
@@ -131,6 +135,42 @@ function drawWeight(x,y,s) {
 	ctx.fillRect(x, y - 0.5 * s, s, s);
 }
 
+function handleCanvasDown(e) {
+	let m = getMass();
+	let eX = e.offsetX, eY = e.offsetY;
+	let wX = calculateX(ts);
+	let wY = SPRING.Y - m/2;
+
+	if (eX > wX && eX < (wX + m) && eY > wY && eY < (wY + m)) {
+		cancelAnimationFrame(req);
+		canvas.addEventListener("mousemove", handleCanvasMove);
+		canvas.addEventListener("mouseup", handleCanvasUp);
+		document.addEventListener("mouseup", handleDocumentUp);
+	}
+}
+function handleCanvasMove(e) {
+	// console.log(e.offsetX)
+	drawAll(null, Math.max(WALL.W, Math.min(e.offsetX - getMass() / 2, SPRING.MAX_X)));
+}
+function handleCanvasUp(e) {
+	// let m = getMass();
+	let eX = e.offsetX;
+	// let wX = calculateX(ts);
+	// let wY = SPRING.Y - m/2;
+
+	document.getElementById("x0").value = Math.max(WALL.W, Math.min(e.offsetX - getMass() / 2, SPRING.MAX_X)) - DIST_FROM_WALL;
+
+	canvas.removeEventListener("mousemove", handleCanvasMove)
+	canvas.removeEventListener("mouseup", handleCanvasUp);
+	resetTime();
+	cancelAnimationFrame(req); // safeguard
+	req = requestAnimationFrame(animate);
+}
+function handleDocumentUp(e) {
+	document.removeEventListener("mouseup", handleDocumentUp);
+	canvas.dispatchEvent(new Event("mouseup"));
+}
+
 function updateOutput(k, m) {
 	let af = Math.sqrt(k / m);
 	let freq = af / (2 * Math.PI);
@@ -143,10 +183,14 @@ function updateOutput(k, m) {
 function getInput(id) {
 	return parseInt(document.getElementById(id).value);
 }
-
-function onInputChange(updateOut=true) {
-	if (updateOut) updateOutput(getK(), getMass());
+function onInputChange(updateOut=true, m=getMass()) {
+	if (updateOut) updateOutput(getK(), m);
 	resetTime();
+}
+function handleMassChange() {
+	let m = getMass();
+	SPRING.MAX_X = CV.W - getMass();
+	onInputChange(true, m);
 }
 function toggleDamper() {
     if (!$("#damper").is(":checked")) {
