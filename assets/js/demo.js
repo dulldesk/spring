@@ -26,7 +26,7 @@ drawWall();
 drawAxis();
 
 $("#damper-input").hide();
-setOutputs(getK(), getMass());
+updateOutput(getK(), getMass());
 document.getElementById("x0").addEventListener("input", onInputChange.bind(null, false));
 document.getElementById("b").addEventListener("input", onInputChange.bind(null, false));
 document.getElementById("m").addEventListener("input", onInputChange);
@@ -41,28 +41,21 @@ let ts = 0;
 function animate(_) {
 	let t = ts;
 	if (t != previousTimeStamp) {
-		ctx.clearRect(WALL.W,0,CV.W-WALL.W,(CV.H+WALL.H)*0.5);
 		previousTimeStamp = t;
-		let m = getMass();
-		let x = Math.round(calculateX(t));
-		console.log(x, t);
-		let k = getK();
-		drawSpring(x, k);
-		drawWall();
-		drawWeight(x, CV.H/2, m);
+		drawAll(t);
 		ts += SPRING.TX;
 	}
 	req = requestAnimationFrame(animate);
 }
-function calculateXNoDamper(t, init_dist=DIST_FROM_WALL) {
-	let ret = getX0() * Math.cos(t/40 * Math.sqrt(getK() / getMass()));
+function calculateXNoDamper(t, k=getK(), m=getMass(), x0=getX0(), init_dist=DIST_FROM_WALL) {
+	let ret = x0 * Math.cos(t/40 * Math.sqrt(k / m));
 	// console.log(ret);
 	return ret + init_dist;
 }
-function calculateXWithDamper(t, init_dist=DIST_FROM_WALL) {
-  	let x0 = getX0();
-	let m = getMass();
-    let k = getK();
+function calculateXWithDamper(t, k=getK(), m=getMass(), x0=getX0(), init_dist=DIST_FROM_WALL) {
+  	// let x0 = getX0();
+	// let m = getMass();
+    // let k = getK();
     let b = getB();
 	let d = b * b - 4 * m * k;
 	let ret = 0;
@@ -92,6 +85,16 @@ function calculateXWithDamper(t, init_dist=DIST_FROM_WALL) {
 	}
 	// console.log(ret);
 	return ret + init_dist;
+}
+function drawAll(t) {
+	ctx.clearRect(WALL.W,0,CV.W-WALL.W,(CV.H+WALL.H)*0.5);
+	let m = getMass();
+	let k = getK();
+	let x = Math.round(calculateX(t, k, m));
+	console.log(x, t);
+	drawSpring(x, k);
+	drawWall();
+	drawWeight(x, CV.H/2, m);
 }
 function drawSpring(mass_x, k) {
 	ctx.fillStyle = 'black';
@@ -126,7 +129,7 @@ function drawWeight(x,y,s) {
 	ctx.fillRect(x, y - 0.5 * s, s, s);
 }
 
-function setOutputs(k, m) {
+function updateOutput(k, m) {
 	let af = Math.sqrt(k / m);
 	let freq = af / (2 * Math.PI);
 	let period = 1 / freq;
@@ -139,8 +142,8 @@ function getInput(id) {
 	return parseInt(document.getElementById(id).value);
 }
 
-function onInputChange(updateOutput=true) {
-	if (updateOutput) setOutputs(getK(), getMass());
+function onInputChange(updateOut=true) {
+	if (updateOut) updateOutput(getK(), getMass());
 	resetTime();
 }
 function toggleDamper() {
