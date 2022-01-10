@@ -192,6 +192,7 @@ function onInputChange(updateOut=true, m=getMass()) {
 function handleMassChange() {
 	let m = getMass();
 	SPRING.MAX_X = CV.W - getMass();
+	document.getElementById("x0").max = SPRING.MAX_X;
 	onInputChange(true, m);
 }
 function toggleDamper() {
