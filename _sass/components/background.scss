@@ -2,7 +2,7 @@
 
 .background {
 	$bkgd-op: rgba($bkgd, 0.8);
-	background: linear-gradient(0deg, $bkgd-op, $bkgd-op), url('/assets/img/winter-tree.jpg') {
+	background: linear-gradient(0deg, $bkgd-op, $bkgd-op), url('../img/winter-tree.jpg') {
 		size: cover;
 		position: center;
 		repeat: no-repeat;
