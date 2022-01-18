@@ -1,50 +1,50 @@
 <div class="demo">
-	<div>
-		<canvas width="400" height="280"></canvas>
-		<!-- <span id="pt-0">0</span> -->
-	</div>
-	<table>
-		<tbody>
-			<tr>
-				<td><input type="checkbox" id="damper"></td>
-				<td><label for="damper">Use a damper</label></td>
-			</tr>
-		</tbody>
-		<tr class="br"></tr>
-		<tbody class="inputs">
-			<tr>
-				<td><label for="x0">x<sub>0</sub></label></td>
-				<td><input type="range" id="x0" name="x0" min="-100" max="400" step="1"></td>
-			</tr>
-			<tr>
-				<td><label for="m">m</label></td>
-				<td><input type="range" id="m" name="m" min="40" max="100" step="10" value="60"></td>
-			</tr>
-			<tr>
-				<td><label for="k">k</label></td>
-				<td><input type="range" id="k" name="k" min="0" max="10" step="1"></td>
-			</tr>
-			<tr id="damper-input">
-				<td><label for="b">b</label></td>
-				<td><input type="range" id="b" name="b" min="0" max="10" step="1"></td>
-			</tr>
-		</tbody>
-		<tr class="br"></tr>
-		<tbody class="outputs">
-			<tr>
-				<td class="label" title="angular frequency">&omega;</td>
-				<td id="w" data-units="rad/s"></td>
-			</tr>
-			<tr>
-				<td class="label" title="period">T</td>
-				<td id="T" data-units="s"></td>
-			</tr>
-			<tr>
-				<td class="label" title="frequency">f</td>
-				<td id="f" data-units="s⁻¹"></td>
-			</tr>
-		</tbody>
-	</table>
+    <div>
+        <canvas width="400" height="280"></canvas>
+        <!-- <span id="pt-0">0</span> -->
+    </div>
+    <table>
+        <tbody>
+            <tr>
+                <td><input type="checkbox" id="damper"></td>
+                <td><label for="damper">Use a damper</label></td>
+            </tr>
+        </tbody>
+        <tr class="br"></tr>
+        <tbody class="inputs">
+            <tr>
+                <td><label for="x0" title="initial displacement">x<sub>0</sub></label></td>
+                <td><input type="range" id="x0" name="x0" min="-100" max="400" step="1"></td>
+            </tr>
+            <tr>
+                <td><label for="m" title="mass">m</label></td>
+                <td><input type="range" id="m" name="m" min="40" max="100" step="10" value="60"></td>
+            </tr>
+            <tr>
+                <td><label for="k" title="spring constant">k</label></td>
+                <td><input type="range" id="k" name="k" min="0" max="10" step="1"></td>
+            </tr>
+            <tr id="damper-input">
+                <td><label for="b" title="damping constant">b</label></td>
+                <td><input type="range" id="b" name="b" min="0" max="10" step="1"></td>
+            </tr>
+        </tbody>
+        <tr class="br"></tr>
+        <tbody class="outputs">
+            <tr>
+                <td class="label" title="angular frequency">&omega;</td>
+                <td id="w" data-units="rad/s"></td>
+            </tr>
+            <tr>
+                <td class="label" title="period">T</td>
+                <td id="T" data-units="s"></td>
+            </tr>
+            <tr>
+                <td class="label" title="frequency">f</td>
+                <td id="f" data-units="s⁻¹"></td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="{{ '/assets/js/demo.js' | relative_url }}" defer></script>
