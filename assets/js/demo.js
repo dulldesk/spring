@@ -22,6 +22,13 @@ const getK = () => getInput("k");
 const getX0 = () => getInput("x0");
 const getB = () => getInput("b");
 const e = Math.E;
+const cancel = () => cancelAnimationFrame(req);
+const request = () => req = requestAnimationFrame(animate);
+const restart = (reset=true) => {
+	cancel();
+	if (reset) resetTime();
+	request();
+};
 
 var last_mass_x;
 var input_tmo;
@@ -37,8 +44,6 @@ document.getElementById("k").addEventListener("input", onInputChange);
 document.getElementById("damper").addEventListener("change", toggleDamper);
 canvas.addEventListener("mousedown", handleCanvasDown);
 
-$("#x0").attr("min", -DIST_FROM_WALL + WALL.W);
-
 var req;
 let previousTimeStamp = -1;
 let ts = 0;
@@ -46,6 +51,7 @@ let ts = 0;
 var calculateX;
 toggleDamper();
 handleMassChange();
+$("#x0").attr("min", -DIST_FROM_WALL + WALL.W);
 
 function animate(_) {
 	let t = ts;
@@ -54,7 +60,7 @@ function animate(_) {
 		drawAll(t);
 		ts += SPRING.TX;
 	}
-	req = requestAnimationFrame(animate);
+	request();
 }
 function calculateXNoDamper(t, k=getK(), m=getMass(), x0=getX0(), init_dist=DIST_FROM_WALL) {
 	let d = - 4 * m * k;
@@ -124,7 +130,7 @@ function drawSpring(mass_x, k) {
     ctx.stroke();
 }
 
-req = requestAnimationFrame(animate);
+request();
 
 function drawAxis() {
 	ctx.fillStyle = 'grey';
@@ -149,7 +155,7 @@ function handleCanvasDown(e) {
 	let wY = SPRING.Y - m/2;
 
 	if (eX > wX && eX < (wX + m) && eY > wY && eY < (wY + m)) {
-		cancelAnimationFrame(req);
+		cancel();
 		last_mass_x = calculateX(ts);
 		canvas.addEventListener("mousemove", handleMassMove);
 		canvas.addEventListener("mouseup", handleCanvasUp);
@@ -172,9 +178,7 @@ function handleCanvasUp(e) {
 
 	canvas.removeEventListener("mousemove", handleMassMove)
 	canvas.removeEventListener("mouseup", handleCanvasUp);
-	cancelAnimationFrame(req); // safeguard
-	resetTime();
-	req = requestAnimationFrame(animate);
+	restart();
 }
 function handleDocumentUp(e) {
 	document.removeEventListener("mouseup", handleDocumentUp);
@@ -197,21 +201,19 @@ function onInputChange(updateOut=true, m=getMass()) {
 	if (updateOut) updateOutput(getK(), m);
 
 	drawAll(ts);
-	cancelAnimationFrame(req);
+	cancel();
 	resetTime();
 
 	if (input_tmo) clearTimeout(input_tmo);
 	input_tmo = setTimeout(() => {
-		cancelAnimationFrame(req); // safeguard
-		resetTime();
-		req = requestAnimationFrame(animate);
+		restart();
 		input_tmo = undefined;
 	}, 500);
 }
 function handleMassChange() {
 	let m = getMass();
 	SPRING.MAX_X = CV.W - getMass();
-	$("#x0").attr("max", SPRING.MAX_X);
+	$("#x0").attr("max", SPRING.MAX_X - DIST_FROM_WALL);
 	onInputChange(true, m);
 }
 function toggleDamper() {
@@ -227,10 +229,8 @@ function toggleDamper() {
     resetTime();
 }
 function resetTime() {
-	// cancelAnimationFrame(req);
 	ts = 0;
 	previousTimeStamp = -1;
-	// req = requestAnimationFrame(animate);
 }
 
 $("#demo-wrapper").click(evt => {
@@ -238,13 +238,12 @@ $("#demo-wrapper").click(evt => {
 	if (evt.target.id === "demo-wrapper" && (evt.clientY - evt.target.getBoundingClientRect().top <= 28)) {
 		const demo = $(".demo");
 		if (demo.is(":visible")) {
-			cancelAnimationFrame(req);
+			cancel();
 			demo.slideUp();
 			$("#demo-wrapper").attr("title", "Click me to maximize the demo again");
 		} else {
 			demo.slideDown();
-			cancelAnimationFrame(req); // safeguard
-			req = requestAnimationFrame(animate);
+			restart(false);
 			$("#demo-wrapper").attr("title", "");
 		}
 	}
