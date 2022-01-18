@@ -23,6 +23,8 @@ const getX0 = () => getInput("x0");
 const getB = () => getInput("b");
 const e = Math.E;
 
+var last_mass_x;
+
 drawWall();
 drawAxis();
 
@@ -33,6 +35,8 @@ document.getElementById("m").addEventListener("input", handleMassChange);
 document.getElementById("k").addEventListener("input", onInputChange);
 document.getElementById("damper").addEventListener("change", toggleDamper);
 canvas.addEventListener("mousedown", handleCanvasDown);
+
+$("#x0").attr("min", -DIST_FROM_WALL + WALL.W);
 
 var req;
 let previousTimeStamp = -1;
@@ -67,7 +71,7 @@ function calculateXWithDamper(t, k=getK(), m=getMass(), x0=getX0(), init_dist=DI
 	let ret = 0;
 	if (Math.abs(d - 0) < 0.00001){
 		// critically damped
-		console.log("crtically damped");
+		// console.log("crtically damped");
 		let r = -1 * b / (2 * m);
 		let c1 = x0;
 		let c2 = -1 * r * x0;
@@ -75,7 +79,7 @@ function calculateXWithDamper(t, k=getK(), m=getMass(), x0=getX0(), init_dist=DI
 	}
 	else if (d > 0){
 		// overdamped
-		console.log("overdamped");
+		// console.log("overdamped");
 		let r1 = (-1 * b + Math.sqrt(d))/(2 * m);
 		let r2 = (-1 * b - Math.sqrt(d))/(2 * m);
 		let c1 = (x0 * r2)/(r2 - r1);
@@ -84,7 +88,7 @@ function calculateXWithDamper(t, k=getK(), m=getMass(), x0=getX0(), init_dist=DI
 	}
 	else{
 		// underdamped
-		console.log("underdamped");
+		// console.log("underdamped");
 		let lmd = (-1 * b)/(2 * m)
 		let mu = (Math.sqrt(-1 * d))/(2 * m);
 		ret = x0 * Math.pow(e, lmd * t) * Math.cos(mu * t);
@@ -145,6 +149,7 @@ function handleCanvasDown(e) {
 
 	if (eX > wX && eX < (wX + m) && eY > wY && eY < (wY + m)) {
 		cancelAnimationFrame(req);
+		last_mass_x = calculateX(ts);
 		canvas.addEventListener("mousemove", handleMassMove);
 		canvas.addEventListener("mouseup", handleCanvasUp);
 		document.addEventListener("mouseup", handleDocumentUp);
@@ -152,15 +157,17 @@ function handleCanvasDown(e) {
 }
 function handleMassMove(e) {
 	// console.log(e.offsetX)
-	drawAll(null, Math.max(WALL.W, Math.min(e.offsetX - getMass() / 2, SPRING.MAX_X)));
+	last_mass_x = Math.max(WALL.W, Math.min(e.offsetX - getMass() / 2, SPRING.MAX_X));
+	drawAll(null, last_mass_x);
 }
 function handleCanvasUp(e) {
 	// let m = getMass();
-	let eX = e.offsetX;
+	// let eX = e.offsetX;
 	// let wX = calculateX(ts);
 	// let wY = SPRING.Y - m/2;
 
-	document.getElementById("x0").value = Math.max(WALL.W, Math.min(e.offsetX - getMass() / 2, SPRING.MAX_X)) - DIST_FROM_WALL;
+	document.getElementById("x0").value = last_mass_x - DIST_FROM_WALL;
+	last_mass_x = undefined; // its value will no longer be accurate
 
 	canvas.removeEventListener("mousemove", handleMassMove)
 	canvas.removeEventListener("mouseup", handleCanvasUp);
@@ -192,7 +199,7 @@ function onInputChange(updateOut=true, m=getMass()) {
 function handleMassChange() {
 	let m = getMass();
 	SPRING.MAX_X = CV.W - getMass();
-	document.getElementById("x0").max = SPRING.MAX_X;
+	$("#x0").attr("max", SPRING.MAX_X);
 	onInputChange(true, m);
 }
 function toggleDamper() {
