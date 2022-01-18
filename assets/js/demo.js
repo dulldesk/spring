@@ -145,12 +145,12 @@ function handleCanvasDown(e) {
 
 	if (eX > wX && eX < (wX + m) && eY > wY && eY < (wY + m)) {
 		cancelAnimationFrame(req);
-		canvas.addEventListener("mousemove", handleCanvasMove);
+		canvas.addEventListener("mousemove", handleMassMove);
 		canvas.addEventListener("mouseup", handleCanvasUp);
 		document.addEventListener("mouseup", handleDocumentUp);
 	}
 }
-function handleCanvasMove(e) {
+function handleMassMove(e) {
 	// console.log(e.offsetX)
 	drawAll(null, Math.max(WALL.W, Math.min(e.offsetX - getMass() / 2, SPRING.MAX_X)));
 }
@@ -162,10 +162,10 @@ function handleCanvasUp(e) {
 
 	document.getElementById("x0").value = Math.max(WALL.W, Math.min(e.offsetX - getMass() / 2, SPRING.MAX_X)) - DIST_FROM_WALL;
 
-	canvas.removeEventListener("mousemove", handleCanvasMove)
+	canvas.removeEventListener("mousemove", handleMassMove)
 	canvas.removeEventListener("mouseup", handleCanvasUp);
-	resetTime();
 	cancelAnimationFrame(req); // safeguard
+	resetTime();
 	req = requestAnimationFrame(animate);
 }
 function handleDocumentUp(e) {
@@ -198,7 +198,7 @@ function handleMassChange() {
 function toggleDamper() {
     if (!$("#damper").is(":checked")) {
         $("#damper-input").hide();
-		$(".outputs").show()
+		$(".outputs").css("display","");
         calculateX = calculateXNoDamper;
     } else {
         $("#damper-input").show();
