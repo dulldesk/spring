@@ -24,6 +24,7 @@ const getB = () => getInput("b");
 const e = Math.E;
 
 var last_mass_x;
+var input_tmo;
 
 drawWall();
 drawAxis();
@@ -194,7 +195,18 @@ function getInput(id) {
 }
 function onInputChange(updateOut=true, m=getMass()) {
 	if (updateOut) updateOutput(getK(), m);
+
+	drawAll(ts);
+	cancelAnimationFrame(req);
 	resetTime();
+
+	if (input_tmo) clearTimeout(input_tmo);
+	input_tmo = setTimeout(() => {
+		cancelAnimationFrame(req); // safeguard
+		resetTime();
+		req = requestAnimationFrame(animate);
+		input_tmo = undefined;
+	}, 500);
 }
 function handleMassChange() {
 	let m = getMass();
