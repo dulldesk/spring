@@ -28,6 +28,6 @@ $$
 </div>
 {% endcomment %}
 
-<div class="box">
+<div class="box" id="demo-wrapper">
 	{% include demo.html %}
 </div>

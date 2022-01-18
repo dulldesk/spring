@@ -220,3 +220,20 @@ function resetTime() {
 	previousTimeStamp = -1;
 	// req = requestAnimationFrame(animate);
 }
+
+$("#demo-wrapper").click(evt => {
+	evt.stopPropagation();
+	if (evt.target.id === "demo-wrapper" && (evt.clientY - evt.target.getBoundingClientRect().top <= 28)) {
+		const demo = $(".demo");
+		if (demo.is(":visible")) {
+			cancelAnimationFrame(req);
+			demo.slideUp();
+			$("#demo-wrapper").attr("title", "Click me to maximize the demo again");
+		} else {
+			demo.slideDown();
+			cancelAnimationFrame(req); // safeguard
+			req = requestAnimationFrame(animate);
+			$("#demo-wrapper").attr("title", "");
+		}
+	}
+})
