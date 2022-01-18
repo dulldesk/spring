@@ -48,5 +48,35 @@
 	// 	display: none;
 	// }
 
+	@media screen and (max-width: 1000px) {
+		flex-flow: column nowrap;
+
+		table {
+			margin-top: 0;
+		}
+		tbody {
+			display: flex;
+			flex-flow: row wrap;
+
+			tr {
+				flex-basis: 50%;
+			}
+			&.outputs tr {
+				flex-basis: unset;
+				margin-right: 1.25rem;
+			}
+		}
+		.inputs td:first-child {
+			width: 20px;
+		}
+		#damper {
+			margin-left: 0;
+		}
+	}
+
+	@media screen and (max-width: 537px) {
+		tbody tr {
+			flex-basis: unset;
+		}
 	}
 }
