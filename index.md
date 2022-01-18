@@ -1,7 +1,5 @@
 ---
 heading: A Model of the Motion of a Spring
-next_page: the model
-next_url: /theory/
 ---
 
 {% capture block %}
