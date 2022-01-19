@@ -208,7 +208,7 @@ function onInputChange(updateOut=true, m=getMass()) {
 	input_tmo = setTimeout(() => {
 		restart();
 		input_tmo = undefined;
-	}, 500);
+	}, 200);
 }
 function handleMassChange() {
 	let m = getMass();
