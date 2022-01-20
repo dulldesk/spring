@@ -17,10 +17,10 @@ const SPRING = {
 	MAX_X: undefined
 };
 
-const getMass = () => getInput("m");
-const getK = () => getInput("k");
-const getX0 = () => getInput("x0");
-const getB = () => getInput("b");
+const getMass = getInput.bind(null, "m");
+const getK = getInput.bind(null, "k");
+const getX0 = getInput.bind(null, "x0");
+const getB = getInput.bind(null, "b");
 const e = Math.E;
 const cancel = () => cancelAnimationFrame(req);
 const request = () => req = requestAnimationFrame(animate);
