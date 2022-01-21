@@ -32,5 +32,6 @@ $(".presets button").click(evt => {
 	$("#k").val(k);
 	$("#b").val(b);
 	$("#x0").val(x0 || PRESET_X0);
+	updateOutput(getK(), getMass());
 	restart();
 });
