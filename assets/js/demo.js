@@ -195,6 +195,22 @@ function updateUndampedOutput(k, m) {
 }
 function updateDampedOutput(k,m,b=getB()) {
 	// here
+	if(b * b - 4 * m * k == 0){
+		$("#sign-damped").text("=");
+		$("#status-damped").text("Critically ");
+	}
+	else if(b * b - 4 * m * k < 0){
+		$("#sign-damped").text("<");
+		$("#status-damped").text("Under");
+	}
+	else if(b * b - 4 * m * k > 0){
+		$("#sign-damped").text(">");
+		$("#status-damped").text("Over");
+	}
+	else {
+		$("#sign-damped").text("BAFAFAF");
+		$("#status-damped").text("BAFAFAF");
+	}
 }
 
 function getInput(id) {
@@ -231,6 +247,7 @@ function toggleDamper() {
         calculateX = calculateXWithDamper;
         updateOutput = updateDampedOutput;
     }
+	updateOutput(getK(), getMass());
     resetTime();
 }
 function resetTime() {
