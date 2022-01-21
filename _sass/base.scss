@@ -56,3 +56,7 @@ h1 {
 h2 {
 	margin: 0;
 }
+
+::selection {
+	background-color: rgba($brown-desat, 0.4);
+}

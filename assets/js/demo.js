@@ -141,11 +141,11 @@ function drawAxis() {
 	// ctx.fillText('0', DIST_FROM_WALL-5, CV.H-25);
 }
 function drawWall(w=WALL.W, h=WALL.H) {
-	ctx.fillStyle = '#7d5938';
+	ctx.fillStyle = '#665f60';
 	ctx.fillRect(0, 0.5 * (CV.H - h), w, h);
 }
 function drawWeight(x,y,s) {
-	ctx.fillStyle = 'grey';
+	ctx.fillStyle = '#a4abb5';
 	ctx.fillRect(x, y - 0.5 * s, s, s);
 }
 
