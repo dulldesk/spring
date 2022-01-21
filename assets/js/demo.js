@@ -36,7 +36,6 @@ var input_tmo;
 drawWall();
 drawAxis();
 
-updateOutput(getK(), getMass());
 document.getElementById("x0").addEventListener("input", onInputChange.bind(null, false));
 document.getElementById("b").addEventListener("input", onInputChange.bind(null, false));
 document.getElementById("m").addEventListener("input", handleMassChange);
@@ -48,9 +47,10 @@ var req;
 let previousTimeStamp = -1;
 let ts = 0;
 
-var calculateX;
+var calculateX, updateOutput;
 toggleDamper();
 handleMassChange();
+updateOutput(getK(), getMass());
 $("#x0").attr("min", -DIST_FROM_WALL + WALL.W);
 
 function animate(_) {
@@ -185,13 +185,16 @@ function handleDocumentUp(e) {
 	canvas.dispatchEvent(new Event("mouseup"));
 }
 
-function updateOutput(k, m) {
+function updateUndampedOutput(k, m) {
 	let af = Math.sqrt(k / m);
 	let freq = af / (2 * Math.PI);
 	let period = 1 / freq;
 	document.getElementById("w").textContent = af.toFixed(3);
 	document.getElementById("T").textContent = period.toFixed(3);
 	document.getElementById("f").textContent = freq.toFixed(3);
+}
+function updateDampedOutput(k,m,b=getB()) {
+	// here
 }
 
 function getInput(id) {
@@ -218,13 +221,15 @@ function handleMassChange() {
 }
 function toggleDamper() {
     if (!$("#damper").is(":checked")) {
-        $("#damper-input").hide();
-		$(".outputs").css("display","");
+        $(".damped").hide();
+		$(".undamped").css("display","");
         calculateX = calculateXNoDamper;
+        updateOutput = updateUndampedOutput;
     } else {
-        $("#damper-input").show();
-		$(".outputs").hide()
+		$(".undamped").hide()
+		$(".damped").show()
         calculateX = calculateXWithDamper;
+        updateOutput = updateDampedOutput;
     }
     resetTime();
 }

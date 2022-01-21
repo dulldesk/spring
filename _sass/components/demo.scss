@@ -31,7 +31,7 @@
 		.br {
 			height: 1rem;
 		}
-		.outputs {
+		.output.undamped {
 			td[data-units] {
 				&::before {
 					content: " =";
@@ -44,9 +44,10 @@
 			}
 		}
 	}
-	// .outputs {
-	// 	display: none;
-	// }
+
+	.output.damped {
+		margin: 1rem 0;
+	}
 
 	@media screen and (max-width: 1000px) {
 		flex-flow: column nowrap;
@@ -61,7 +62,7 @@
 			tr {
 				flex-basis: 50%;
 			}
-			&.outputs tr {
+			&.output.undamped tr {
 				flex-basis: unset;
 				margin-right: 1.25rem;
 			}

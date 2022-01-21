@@ -25,7 +25,7 @@
                 <td><label for="k" title="spring constant">k</label></td>
                 <td><input type="range" id="k" name="k" min="0" max="10" step="1" value="4"></td>
             </tr>
-            <tr id="damper-input">
+            <tr class="damped">
                 <td><label for="b" title="damping constant">b</label></td>
                 <td><input type="range" id="b" name="b" min="0" max="100" step="2" value="6"></td>
             </tr>
@@ -46,6 +46,11 @@
             </tr>
         </tbody>
     </table>
+    <div class="output damped">
+        <!-- here -->
+        <span>b<sup>2</sup> - 4ac <span id="sign-damped"></span> 0</span>
+        <span><span id="status-damped"></span>damped</span>
+    </div>
     <details class="damped" open>
         <summary>Presets</summary>
         <div class="presets">
