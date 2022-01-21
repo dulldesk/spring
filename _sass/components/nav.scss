@@ -1,4 +1,5 @@
 @import "../colours";
+@import "../utils";
 
 nav {
 	position: absolute;
@@ -12,7 +13,7 @@ nav {
 		font-size: 1.25rem;
 		font-weight: bold;
 		cursor: pointer;
-		user-select: none;
+		@extend %no-select;
 	}
 	ul {
 		padding-left: 0;
