@@ -37,7 +37,7 @@ drawWall();
 drawAxis();
 
 document.getElementById("x0").addEventListener("input", onInputChange.bind(null, false));
-document.getElementById("b").addEventListener("input", onInputChange.bind(null, false));
+document.getElementById("b").addEventListener("input", onInputChange);
 document.getElementById("m").addEventListener("input", handleMassChange);
 document.getElementById("k").addEventListener("input", onInputChange);
 document.getElementById("damper").addEventListener("change", toggleDamper);
