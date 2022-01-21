@@ -79,4 +79,29 @@
 			flex-basis: unset;
 		}
 	}
+	.presets {
+		display: flex;
+		flex-direction: column;
+
+		button {
+			// flex-basis: 21%;
+			// width: min-content;
+			overflow-wrap: break-word;
+			background-color: #BFAC9A9E;
+			outline: none;
+			border: none;
+			border-radius: 5px;
+			text-transform: uppercase;
+			margin: 2px 0;
+			cursor: pointer;
+
+			&:hover {
+				background-color: #ececece0;
+			}
+		}
+	}
+	summary {
+		text-align: left;
+		margin-bottom: 7px;
+	}
 }

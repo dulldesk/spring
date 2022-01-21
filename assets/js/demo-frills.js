@@ -22,3 +22,15 @@ function toggleDemo(down) {
 if (window.location.search.substr(1).split("&").includes("min=1")) {
     toggleDemo(true);
 }
+
+const PRESET_X0 = 60;
+
+// damper presets
+$(".presets button").click(evt => {
+	let [m,k,b,x0] = $(evt.target).data("preset");
+	$("#m").val(m);
+	$("#k").val(k);
+	$("#b").val(b);
+	$("#x0").val(x0 || PRESET_X0);
+	restart();
+});

@@ -3,6 +3,7 @@
         <canvas width="400" height="280"></canvas>
         <!-- <span id="pt-0">0</span> -->
     </div>
+    <div class="controls">
     <table>
         <tbody>
             <tr>
@@ -45,6 +46,15 @@
             </tr>
         </tbody>
     </table>
+    <details class="damped" open>
+        <summary>Presets</summary>
+        <div class="presets">
+            <button data-preset="[50,5,6]">Under<wbr>damped</button>
+            <button data-preset="[40,10,40]">Critically damped</button>
+            <button data-preset="[80,5,60]">Over<wbr>damped</button>
+        </div>
+    </details>
+    </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="{{ '/assets/js/demo.js' | relative_url }}" defer></script>
