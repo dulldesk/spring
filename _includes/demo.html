@@ -18,19 +18,19 @@
             </tr>
             <tr>
                 <td><label for="m" title="mass">m</label></td>
-                <td><input type="range" id="m" name="m" min="40" max="100" step="10" value="60"></td>
+                <td><input type="range" id="m" name="m" min="40" max="100" step="10" value="70"></td>
             </tr>
             <tr>
                 <td><label for="k" title="spring constant">k</label></td>
-                <td><input type="range" id="k" name="k" min="0" max="10" step="1" value="2"></td>
+                <td><input type="range" id="k" name="k" min="0" max="10" step="1" value="4"></td>
             </tr>
             <tr id="damper-input">
                 <td><label for="b" title="damping constant">b</label></td>
-                <td><input type="range" id="b" name="b" min="0" max="100" step="10"></td>
+                <td><input type="range" id="b" name="b" min="0" max="100" step="2" value="6"></td>
             </tr>
         </tbody>
-        <tr class="br"></tr>
-        <tbody class="outputs">
+        <tbody class="output undamped">
+            <tr class="br"></tr>
             <tr>
                 <td class="label" title="angular frequency">&omega;</td>
                 <td id="w" data-units="rad/s"></td>
