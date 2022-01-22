@@ -18,7 +18,7 @@
 	}
 
 	table {
-		margin-top: 2.5rem;
+		margin-top: 0.5rem;
 		margin-bottom: 1rem;
 
 		td:last-child {
@@ -126,15 +126,14 @@
 		display: flex;
 		flex-direction: column;
 
-		$gap: 5px;
+		$gap: 4px;
 
 		button {
 			overflow-wrap: break-word;
 			text-transform: uppercase;
 
 			color: #2D3846;
-			// background: linear-gradient(rgba(lighten($brown-desat, 30%), 0.2) 0%, rgba(lighten($brown-desat, 2%), 0.4) 60%, rgba(lighten($brown-desat, 2%), 0.6) 100%);
-			background-color: rgba(#bdb6ab, 0.75);
+			background-color: rgba(#bdb6ab, 0.6);
 			outline: none;
 			border: 1px solid rgb(200, 188, 184);
 			border-radius: 6px;
@@ -156,9 +155,13 @@
 			}
 		}
 	}
+	details {
+		margin-top: 1.3rem;
+	}
 	summary {
 		text-align: left;
 		margin-bottom: 7px;
+		color: darken(#8A8483, 6%);
 		@extend %no-select;
 	}
 }
