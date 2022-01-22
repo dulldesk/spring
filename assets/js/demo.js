@@ -52,6 +52,7 @@ toggleDamper();
 handleMassChange();
 updateOutput(getK(), getMass());
 $("#x0").attr("min", -DIST_FROM_WALL + WALL.W);
+$("#x0 + .bounds > *:first-child").text(-DIST_FROM_WALL + WALL.W);
 
 function animate(_) {
 	let t = ts;
@@ -233,6 +234,7 @@ function handleMassChange() {
 	let m = getMass();
 	SPRING.MAX_X = CV.W - getMass();
 	$("#x0").attr("max", SPRING.MAX_X - DIST_FROM_WALL);
+	$("#x0 + .bounds > *:last-child").text(SPRING.MAX_X - DIST_FROM_WALL);
 	onInputChange(true, m);
 }
 function toggleDamper() {

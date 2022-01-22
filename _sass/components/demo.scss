@@ -28,7 +28,47 @@
 			label {
 				padding-right: 0.25rem;
 				text-align: center;
+				font-size: 1.2rem;
+
+				sub {
+					font-size: 60%;
+				}
 			}
+
+			.bounds {
+				display: flex;
+				justify-content: space-between;
+				font-size: small;
+				color: grey;
+			}
+			td:first-child {
+				vertical-align: text-top;
+				position: relative;
+			}
+			td:last-child {
+				padding-top: 3px;
+			}
+
+			input[type="range"] {
+				height: 5px;
+				background: #7d746c3d;
+				margin-bottom: 3px;
+
+				&::-moz-range-track {
+				}
+				&::-webkit-slider-thumb,
+				&::-moz-range-thumb {
+					background: $brown-desat;
+					border-radius: 3px;
+					width: 5px;
+					height: 18px;
+					border: none;
+				}
+			}
+		}
+		input[type="checkbox"] {
+			filter: sepia(50%) hue-rotate(184deg);
+			margin-left: -1px;
 		}
 		.br {
 			height: 1rem;
