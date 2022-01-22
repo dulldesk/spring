@@ -57,6 +57,10 @@ h2 {
 	margin: 0;
 }
 
+a:visited, a:active {
+	color: unset;
+}
+
 ::selection {
 	background-color: rgba($brown-desat, 0.4);
 }

@@ -1,5 +1,6 @@
 ---
 heading: A Model of the Motion of a Spring
+footer: true
 mathjax: false
 ---
 
