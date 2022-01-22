@@ -92,17 +92,18 @@
 			overflow-wrap: break-word;
 			text-transform: uppercase;
 
-			color: #5e5953;
-			background-color: #E1CBBABA;
+			color: #2D3846;
+			background-color: rgba(#bdb6ab, 0.75);
 			outline: none;
-			border: none;
-			border-radius: 2px;
+			border: 1px solid rgb(200, 188, 184);
+			border-radius: 6px;
 
 			margin: $gap 0;
+			padding: 4px;
 			cursor: pointer;
 
 			&:hover {
-				background-color: #B7A292BA;
+				background-color: rgba($brown-desat, 0.6);
 			}
 		}
 		@include screen($laptop) {
