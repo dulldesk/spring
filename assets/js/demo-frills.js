@@ -1,31 +1,56 @@
-// click top of wrapper to minimize
-$("#demo-wrapper").click(evt => {
-	evt.stopPropagation();
-	if (evt.target.id === "demo-wrapper" && (evt.clientY - evt.target.getBoundingClientRect().top <= 28)) {
-		toggleDemo();
+const NODES = {
+	demo: {
+		type: "demo",
+		id: "demo-wrapper",
+		content_id: ".demo",
+		animate: true
+	},
+	slides: {
+		type: "slides",
+		id: "slides-wrapper",
+		content_id: "#slides-wrapper iframe"
 	}
+};
+
+// click top of wrapper to minimize
+function toggleNode(node, slide_up) {
+	const content = $(node.content_id);
+	if (slide_up || content.is(":visible")) {
+		if (node.animate) cancel();
+		content.slideUp();
+		$(node.id).attr("title", `Click me to maximize the ${node.type} again`);
+	} else {
+		content.slideDown();
+		if (node.animate) restart(false);
+		$(node.id).attr("title", "");
+	}
+}
+
+for (let key in NODES) {
+	let node = NODES[key];
+	$("#" + node.id).click(node, evt => {
+		evt.stopPropagation();
+		if (evt.target.id === evt.data.id && (evt.clientY - evt.target.getBoundingClientRect().top <= 28)) {
+			toggleNode(evt.data);
+		}
+	});
+
+	// Minimize nodes through GET parameters
+	if (window.location.search.substr(1).split("&").includes(`${key}=0`)) {
+	    toggleNode(node, true);
+	}
+}
+
+
+// Defer iframe loading
+$(document).ready(() => {
+	$("iframe").attr("src", $("iframe").data("src"));
 });
 
-function toggleDemo(down) {
-	const demo = $(".demo");
-	if (down || demo.is(":visible")) {
-		cancel();
-		demo.slideUp();
-		$("#demo-wrapper").attr("title", "Click me to maximize the demo again");
-	} else {
-		demo.slideDown();
-		restart(false);
-		$("#demo-wrapper").attr("title", "");
-	}
-}
-
-if (window.location.search.substr(1).split("&").includes("min=1")) {
-    toggleDemo(true);
-}
-
-const PRESET_X0 = 60;
 
 // damper presets
+const PRESET_X0 = 60;
+
 $(".presets button").click(evt => {
 	let [m,k,b,x0] = $(evt.target).data("preset");
 	$("#m").val(m);

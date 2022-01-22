@@ -22,11 +22,9 @@ $$
 {% include node.html content=block %}
 {% endcomment %}
 
-{% comment %}
-<div class="box">
-	{% include slides.html embed='2PACX-1vRo-GXbSyK5pJniqBHStM_6omPidoUyvzUhH_TNPkOprl6wke0EwYOl_IZUjzI-jFgBkSBmBW83NnRB' %}
+<div class="box" id="slides-wrapper">
+	{% include slides.html embed='2PACX-1vR0xl54YSLVrYN-MA4dPeIsgfS8oeBAzHb3pdSlKbYWslVsjAa27FHo-PQv6U3-4mO1-zjTG-3NY1_V' %}
 </div>
-{% endcomment %}
 
 <div class="box" id="demo-wrapper">
 	{% include demo.html %}
