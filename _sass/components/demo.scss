@@ -126,13 +126,14 @@
 		display: flex;
 		flex-direction: column;
 
-		$gap: 2px;
+		$gap: 5px;
 
 		button {
 			overflow-wrap: break-word;
 			text-transform: uppercase;
 
 			color: #2D3846;
+			// background: linear-gradient(rgba(lighten($brown-desat, 30%), 0.2) 0%, rgba(lighten($brown-desat, 2%), 0.4) 60%, rgba(lighten($brown-desat, 2%), 0.6) 100%);
 			background-color: rgba(#bdb6ab, 0.75);
 			outline: none;
 			border: 1px solid rgb(200, 188, 184);
