@@ -18,6 +18,9 @@ footer {
 		stroke-linejoin: round;
 		fill: none;
 	}
+	a {
+		text-decoration: none;
+	}
 	a:hover {
 		color: $brown-dark;
 	}
